@@ -27,8 +27,8 @@ export default class App extends React.Component {
       return this.renderLoadingView();
     }
 
-    var users = this.state.users;
-    return this.renderUser(users);
+    var user = this.state.users[0];
+    return this.renderUser(user);
 
   }
 
@@ -40,16 +40,11 @@ export default class App extends React.Component {
     );
   }
 
-  renderUser(users) {
-    const userList = users.map((user) => 
-      <View key={user._id}>
-        <Text>{user.firstName} {user.lastName}</Text>
-        <Text>{user.age} - {user.netWorth}</Text>
-      </View>
-    );
+  renderUser(user) {
     return (
       <View style={styles.container}>
-        {userList}
+        <Text>{user.firstName} {user.lastName}</Text>
+        <Text>{user.age} - {user.netWorth}</Text>
       </View>
     );  
   }
