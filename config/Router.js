@@ -6,5 +6,4 @@ import RoomInfo from '../components/RoomInfo'
 export const RoomListNav = StackNavigator({
   RoomList: { screen: RoomList },
   RoomInfo: { screen: RoomInfo },
-
 })
