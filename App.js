@@ -1,21 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, } from 'react-native';
+import { Text, } from 'react-native';
+import { RoomListNav } from './config/Router'
+import RoomInfo from './components/RoomInfo'
+
 
 export default class App extends React.Component {
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Welcome to Rescape!</Text>
-      </View>
+      <RoomListNav />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
