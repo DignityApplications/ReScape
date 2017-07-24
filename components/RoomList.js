@@ -28,7 +28,6 @@ export default class RoomList extends React.Component {
     this.fetchData();
   }
   fetchData() {
-    console.log('hit')
     fetch('http://192.168.0.6:3000/rooms') //My local ip address (so the phone can access it)
       .then((response) => response.json())
       .then((availableRooms) => {
@@ -65,7 +64,9 @@ export default class RoomList extends React.Component {
         <ListView style={[styles.container, {backgroundColor: this.state.backgroundColor}]}
           key={this.state.availableRooms._id}
           dataSource={this.state.dataSource}
-          renderRow={(room) => <RoomButton backgroundColor={room.color} roomName={room.name} onSelect={this.onLearnMore} />}
+          renderRow={(room) => <RoomButton
+                                  backgroundColor={room.color} roomName={room.name} roomDifficulty={room.difficulty}
+                                  onSelect={this.onLearnMore} />}
           renderHeader={() => <Text style={styles.header}>Escape Rooms:</Text>}
           renderFooter={() => <RoomForm onNewRoom={this.newRoom} />}>
         </ListView>

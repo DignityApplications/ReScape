@@ -2,9 +2,12 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements'
 
-const RoomButton = ({backgroundColor, roomName, onSelect=f=>f}) => (
+const RoomButton = ({backgroundColor, roomName, roomDifficulty, onSelect=f=>f}) => (
 <TouchableHighlight onPress={() => onSelect(backgroundColor)} underlayColor='grey'>
   <View style={styles.row}>
+    {roomDifficulty >= 1 ? <Icon name='bookmark' color={'red'} /> : null}
+    {roomDifficulty >= 2 ? <Icon name='bookmark' color={'red'} /> : null}
+    {roomDifficulty >= 3 ? <Icon name='bookmark' color={'red'} /> : null}
     <Icon name='opacity' color={backgroundColor} style={styles.icon}/>
     <Text style={styles.text} >{roomName}</Text>
   </View>
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   text: {
-    fontSize: 30,
+    fontSize: 25,
     margin:5,
   }
 });
