@@ -31,7 +31,6 @@ export default class RoomList extends React.Component {
     this.fetchData();
   }
   fetchData() {
-    console.log('hit')
     fetch('http://' + Config.ip + ':3000/rooms') //My local ip address (so the phone can access it)
       .then((response) => response.json())
       .then((availableRooms) => {
