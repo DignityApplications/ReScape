@@ -16,7 +16,18 @@ export default class RoomList extends React.Component {
     }
 
     this.onPressLogin = this.onPressLogin.bind(this)
+    this.onPressLogout = this.onPressLogout.bind(this)
+  }
 
+  componentDidMount() { //Get the current login status
+    fetch('http://' + Config.ip + ':3000/loggedIn')
+        .then((response) => response.json())
+        .then((loginResponse) => {
+            this.setState({
+                loggedIn: loginResponse.loggedIn,
+            });
+        })
+        .done();    
   }
 
   onPressLogin() {
@@ -30,6 +41,17 @@ export default class RoomList extends React.Component {
         email: this.state.email,
         password: this.state.password,
     })})
+    .then((response) => response.json())
+    .then((loginResponse) => {
+        this.setState({
+            loggedIn: loginResponse.loggedIn,
+        });
+    })
+    .done();
+  }
+
+  onPressLogout() {
+    fetch('http://' + Config.ip + ':3000/logout')
     .then((response) => response.json())
     .then((loginResponse) => {
         this.setState({
@@ -62,6 +84,12 @@ export default class RoomList extends React.Component {
                 title="Login"
                 color='#5cb85c'
                 accessibilityLabel="Login to Rescape"
+                />
+                <Button
+                onPress={this.onPressLogout}
+                title="Logout"
+                color='#d9534f'
+                accessibilityLabel="Logout"
                 />
                 <Text>Logged in: {String(this.state.loggedIn)}</Text>
             </ScrollView>
