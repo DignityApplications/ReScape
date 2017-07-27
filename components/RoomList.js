@@ -3,6 +3,9 @@ import { Dimensions, StyleSheet, ListView, Text, Alert } from 'react-native';
 import RoomButton from './RoomButton'
 import RoomForm from './RoomForm'
 
+//Import Config.js for IP address
+var Config = require('../config.js')
+
 export default class RoomList extends React.Component {
 
   constructor() {
@@ -29,7 +32,7 @@ export default class RoomList extends React.Component {
   }
   fetchData() {
     console.log('hit')
-    fetch('http://192.168.0.6:3000/rooms') //My local ip address (so the phone can access it)
+    fetch('http://' + Config.ip + ':3000/rooms') //My local ip address (so the phone can access it)
       .then((response) => response.json())
       .then((availableRooms) => {
         this.setState({
@@ -45,7 +48,7 @@ export default class RoomList extends React.Component {
   }
 
   newRoom(newColor) {
-    roomToAdd = {color: newColor, title: 'New Room'}
+    roomToAdd = {themeColor: newColor, title: 'New Room'}
     const availableRooms = [ ...this.state.availableRooms, roomToAdd]
 
     this.setState({
@@ -64,8 +67,9 @@ export default class RoomList extends React.Component {
     return (
         <ListView style={[styles.container, {backgroundColor: this.state.backgroundColor}]}
           key={this.state.availableRooms._id}
-          dataSource={this.state.dataSource}
-          renderRow={(room) => <RoomButton backgroundColor={room.color} roomName={room.name} onSelect={this.onLearnMore} />}
+          dataSource={this.state.dataSource}         
+          renderRow={(room) => <RoomButton backgroundColor={room.themeColor} roomName={room.name} roomDifficulty={room.difficulty}
+          onSelect={this.onLearnMore} />}
           renderHeader={() => <Text style={styles.header}>Escape Rooms:</Text>}
           renderFooter={() => <RoomForm onNewRoom={this.newRoom} />}>
         </ListView>
