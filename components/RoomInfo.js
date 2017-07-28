@@ -2,7 +2,8 @@ import React from 'react'
 import {Text, View, StyleSheet, TouchableHighlight} from 'react-native'
 import ColorTools from 'color'
 
-const RoomInfo = ({ backgroundColor }) => {
+const RoomInfo = ({ navigation }) => {
+  const backgroundColor = navigation.state.params.backgroundColor
   const color = ColorTools(backgroundColor).negate()
   return (
     <TouchableHighlight style={[styles.container, {backgroundColor}]}>

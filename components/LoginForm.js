@@ -1,10 +1,11 @@
 import React from 'react';
 import {  StyleSheet, Button, Text, View, TextInput, ScrollView, Alert } from 'react-native';
+import { connect } from 'react-redux'
 
 //Import Config.js for IP address
 var Config = require('../config.js')
 
-export default class RoomList extends React.Component {
+class LoginForm extends React.Component {
 
   constructor() {
     super()
@@ -27,7 +28,7 @@ export default class RoomList extends React.Component {
                 loggedIn: loginResponse.loggedIn,
             });
         })
-        .done();    
+        .done();
   }
 
   onPressLogin() {
@@ -46,6 +47,9 @@ export default class RoomList extends React.Component {
         this.setState({
             loggedIn: loginResponse.loggedIn,
         });
+        {console.log(this.props.user.loggedIn)}
+        {this.state.loggedIn ? this.props.user.loggedIn = true : null}
+        {console.log(this.props.user.loggedIn)}
     })
     .done();
   }
@@ -67,17 +71,17 @@ export default class RoomList extends React.Component {
             <ScrollView>
                 <Text style={styles.header}>RESCAPE</Text>
                 <Text style={styles.textLabel}>Email: </Text>
-                <TextInput 
-                underlineColorAndroid='rgba(0,0,0,0)' 
+                <TextInput
+                underlineColorAndroid='rgba(0,0,0,0)'
                 style={styles.textInput}
                 onChangeText={(email) => this.setState({email})}
                 />
                 <Text style={styles.textLabel}>Password: </Text>
-                <TextInput underlineColorAndroid='rgba(0,0,0,0)' 
-                secureTextEntry={true} 
-                style={styles.textInput} 
+                <TextInput underlineColorAndroid='rgba(0,0,0,0)'
+                secureTextEntry={true}
+                style={styles.textInput}
                 onChangeText={(password) => this.setState({password})}
-                
+
                 />
                 <Button
                 onPress={this.onPressLogin}
@@ -128,3 +132,9 @@ const styles = StyleSheet.create({
       width: 300,
   },
 });
+
+const mapStateToProps = state => {
+    return { user: state.user }
+}
+
+export default connect(mapStateToProps)(LoginForm)
