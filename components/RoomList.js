@@ -1,12 +1,13 @@
 import React from 'react';
 import { Dimensions, StyleSheet, ListView, Text, Alert } from 'react-native';
+import { connect } from 'react-redux'
 import RoomButton from './RoomButton'
 import RoomForm from './RoomForm'
 
 //Import Config.js for IP address
 var Config = require('../config.js')
 
-export default class RoomList extends React.Component {
+class RoomList extends React.Component {
 
   constructor() {
     super()
@@ -66,10 +67,10 @@ export default class RoomList extends React.Component {
     return (
         <ListView style={[styles.container, {backgroundColor: this.state.backgroundColor}]}
           key={this.state.availableRooms._id}
-          dataSource={this.state.dataSource}         
+          dataSource={this.state.dataSource}
           renderRow={(room) => <RoomButton backgroundColor={room.themeColor} roomName={room.name} roomDifficulty={room.difficulty}
           onSelect={this.onLearnMore} />}
-          renderHeader={() => <Text style={styles.header}>Escape Rooms:</Text>}
+          renderHeader={() => <Text style={styles.header}>{`${this.props.user.firstName} ${this.props.user.lastName}'s Escape Rooms:`}</Text>}
           renderFooter={() => <RoomForm onNewRoom={this.newRoom} />}>
         </ListView>
     );
@@ -88,3 +89,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
+const mapStateToProps = state => {
+    return { user: state.user }
+}
+
+export default connect(mapStateToProps)(RoomList)

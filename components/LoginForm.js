@@ -1,6 +1,7 @@
 import React from 'react';
 import {  StyleSheet, Button, Text, View, TextInput, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux'
+import {updateUser,} from '../actions'
 
 //Import Config.js for IP address
 var Config = require('../config.js')
@@ -44,12 +45,8 @@ class LoginForm extends React.Component {
     })})
     .then((response) => response.json())
     .then((loginResponse) => {
-        this.setState({
-            loggedIn: loginResponse.loggedIn,
-        });
-        {console.log(this.props.user.loggedIn)}
-        {this.state.loggedIn ? this.props.user.loggedIn = true : null}
-        {console.log(this.props.user.loggedIn)}
+        {loginResponse.loggedIn ?
+          this.props.dispatch(updateUser(loginResponse.firstName, loginResponse.lastName, loginResponse.email, loginResponse.loggedIn)) : null}
     })
     .done();
   }
