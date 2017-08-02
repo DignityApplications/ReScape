@@ -2,10 +2,10 @@ import React from 'react'
 import { Text } from 'react-native'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import reducers from './reducers/UserReducer'
+import rootReducer from './reducers/Index'
 import Index from './components/Index'
 
-const store = createStore(reducers)
+const store = createStore(rootReducer)
 
 export default class App extends React.Component {
 

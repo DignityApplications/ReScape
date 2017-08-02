@@ -1,8 +1,8 @@
 import React from 'react';
 import { Dimensions, StyleSheet, ListView, Text, Alert } from 'react-native';
 import { connect } from 'react-redux'
+import { updateRoomList } from '../actions'
 import RoomButton from './RoomButton'
-import RoomForm from './RoomForm'
 
 //Import Config.js for IP address
 var Config = require('../config.js')
@@ -14,17 +14,12 @@ class RoomList extends React.Component {
     this.ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     })
-    const availableRooms = [{color: 'grey', name: 'Prison Break Escape'}, {color: 'black', name: 'Space Vortex Escape'},
-                               {color: 'orange', name: 'Desert Oasis Escape'}, {color: 'brown', name: 'Log Cabin Escape'},
-                               {color: 'yellow', name: 'Stranded Island Escape'}, {color: 'green', name: 'Aliean Ship Escape'},
-                               {color: 'red', name: 'Santas Shop Escape'}, {color: 'blue', name: 'Frozen Forest Escape'}]
+
     this.state = {
       backgroundColor: 'white',
-      availableRooms,
       dataSource: this.ds.cloneWithRows([])
     }
     this.changeColor = this.changeColor.bind(this)
-    this.newRoom = this.newRoom.bind(this)
     this.onLearnMore = this.onLearnMore.bind(this)
   }
 
@@ -34,10 +29,12 @@ class RoomList extends React.Component {
   fetchData() {
     fetch('http://' + Config.ip + ':3000/rooms') //My local ip address (so the phone can access it)
       .then((response) => response.json())
-      .then((availableRooms) => {
+      .then((rooms) => {
+
+        this.props.dispatch(updateRoomList(rooms))
+
         this.setState({
-          availableRooms,
-          dataSource: this.ds.cloneWithRows(availableRooms)
+          dataSource: this.ds.cloneWithRows(rooms)
         });
       })
       .done();
@@ -47,15 +44,6 @@ class RoomList extends React.Component {
     this.setState({backgroundColor})
   }
 
-  newRoom(newColor) {
-    roomToAdd = {themeColor: newColor, title: 'New Room'}
-    const availableRooms = [ ...this.state.availableRooms, roomToAdd]
-
-    this.setState({
-      availableRooms,
-      dataSource: this.ds.cloneWithRows(availableRooms)
-    })
-  }
 
   onLearnMore(backgroundColor){
     const { navigate } = this.props.navigation;
@@ -66,12 +54,12 @@ class RoomList extends React.Component {
   render() {
     return (
         <ListView style={[styles.container, {backgroundColor: this.state.backgroundColor}]}
-          key={this.state.availableRooms._id}
+          key={this.props.rooms._id}
           dataSource={this.state.dataSource}
           renderRow={(room) => <RoomButton backgroundColor={room.themeColor} roomName={room.name} roomDifficulty={room.difficulty}
           onSelect={this.onLearnMore} />}
           renderHeader={() => <Text style={styles.header}>{`${this.props.user.firstName} ${this.props.user.lastName}'s Escape Rooms:`}</Text>}
-          renderFooter={() => <RoomForm onNewRoom={this.newRoom} />}>
+          enableEmptySections={true}>
         </ListView>
     );
   }
@@ -91,7 +79,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    return { user: state.user }
+    return { user: state.user, rooms:state.rooms }
 }
 
 export default connect(mapStateToProps)(RoomList)
