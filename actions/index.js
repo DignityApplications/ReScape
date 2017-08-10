@@ -11,3 +11,17 @@ export const updateRoomList = (rooms) => {
       payload: {rooms},
     }
 }
+
+export const updateCurrentRoomID = (roomID) => {
+    return {
+      type: 'UPDATE_CURRENT_ROOM_ID',
+      payload: {roomID},
+    }
+}
+
+export const updateSceneList = (scenes) => {
+    return {
+      type: 'UPDATE_SCENES_LIST',
+      payload: {scenes},
+    }
+}

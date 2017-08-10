@@ -25,9 +25,11 @@ class LoginForm extends React.Component {
     fetch('http://' + Config.ip + ':3000/loggedIn')
         .then((response) => response.json())
         .then((loginResponse) => {
-            this.setState({
-                loggedIn: loginResponse.loggedIn,
-            });
+          {loginResponse.loggedIn ?
+            this.props.dispatch(updateUser(loginResponse.firstName, loginResponse.lastName, loginResponse.email, loginResponse.loggedIn)) : null}
+            // this.setState({
+            //     loggedIn: loginResponse.loggedIn,
+            // });
         })
         .done();
   }

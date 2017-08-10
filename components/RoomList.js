@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dimensions, StyleSheet, ListView, Text, Alert } from 'react-native';
+import { Dimensions, StyleSheet, ListView, Text, } from 'react-native';
 import { connect } from 'react-redux'
-import { updateRoomList } from '../actions'
+import { updateRoomList, updateCurrentRoomID } from '../actions'
 import RoomButton from './RoomButton'
 
 //Import Config.js for IP address
@@ -19,7 +19,6 @@ class RoomList extends React.Component {
       backgroundColor: 'white',
       dataSource: this.ds.cloneWithRows([])
     }
-    this.changeColor = this.changeColor.bind(this)
     this.onLearnMore = this.onLearnMore.bind(this)
   }
 
@@ -40,15 +39,10 @@ class RoomList extends React.Component {
       .done();
   }
 
-  changeColor(backgroundColor) {
-    this.setState({backgroundColor})
-  }
-
-
-  onLearnMore(backgroundColor){
+  onLearnMore(backgroundColor, roomID){
     const { navigate } = this.props.navigation;
-    navigate('RoomInfo', { backgroundColor })
-    this.setState({backgroundColor})
+    navigate('SceneList', { backgroundColor })
+    this.props.dispatch(updateCurrentRoomID(roomID))
   }
 
   render() {
@@ -56,7 +50,7 @@ class RoomList extends React.Component {
         <ListView style={[styles.container, {backgroundColor: this.state.backgroundColor}]}
           key={this.props.rooms._id}
           dataSource={this.state.dataSource}
-          renderRow={(room) => <RoomButton backgroundColor={room.themeColor} roomName={room.name} roomDifficulty={room.difficulty}
+          renderRow={(room) => <RoomButton backgroundColor={room.themeColor} roomID={room._id} roomName={room.name} roomDifficulty={room.difficulty}
           onSelect={this.onLearnMore} />}
           renderHeader={() => <Text style={styles.header}>{`${this.props.user.firstName} ${this.props.user.lastName}'s Escape Rooms:`}</Text>}
           enableEmptySections={true}>
