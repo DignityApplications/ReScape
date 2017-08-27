@@ -2,7 +2,9 @@ import React from 'react'
 import { TabNavigator, StackNavigator, } from 'react-navigation'
 import RoomList from '../components/RoomList'
 import SceneList from '../components/SceneList'
+import Panels from '../components/Panels'
 import Store from '../components/Store'
+import NavTestingComponent from '../components/NavTestingComponent'
 import News from '../components/News'
 
 
@@ -28,5 +30,7 @@ export const MainMenuTabNav = TabNavigator({
     {
       RoomList: { screen: MainMenuTabNav,  header: null, navigationOptions: { header: null }    },
       SceneList: { screen: SceneList },
+      Panels: { screen: Panels },
+      NavTestingComponent: { screen: NavTestingComponent },
     }
   )

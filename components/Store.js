@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, ListView, Text, View } from 'react-native';
 import { connect } from 'react-redux'
 import { updateRoomList } from '../actions'
 import RoomButton from './RoomButton'
+import NavTestingComponent from './NavTestingComponent'
 
 class Store extends React.Component {
 
@@ -16,8 +17,7 @@ class Store extends React.Component {
 
   onLearnMore(backgroundColor){
     const { navigate } = this.props.navigation;
-    navigate('RoomInfo', { backgroundColor })
-    this.setState({backgroundColor})
+    navigate('NavTestingComponent', { backgroundColor })
   }
 
   render() {

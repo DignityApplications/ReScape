@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 const SceneButton = ({ sceneID, sceneName, storyText, onSelect=f=>f}) => (
-<TouchableHighlight onPress={() => onSelect(sceneID)} underlayColor='grey'>
+<TouchableHighlight onPress={() => onSelect(sceneID, sceneName)} underlayColor='grey'>
   <View style={styles.row}>
     <Text style={styles.text} >{sceneName}</Text>
     <Text style={styles.storyText} >{storyText}</Text>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     margin:2,
     color: 'red'
   },
-  storyText: {
+  storyText: {color: 'red',
     flex: 1,
     fontSize: 15,
     fontStyle: 'italic',

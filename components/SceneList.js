@@ -38,8 +38,10 @@ class SceneList extends React.Component {
       .done();
   }
 
-  onLearnMore(scenID){
-    console.log(scenID)
+  onLearnMore(sceneID, sceneName){
+    console.log(sceneID)
+    const { navigate } = this.props.navigation;
+    navigate('Panels', { sceneID, sceneName })
   }
 
   render() {
