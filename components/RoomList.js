@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, ListView, Text, } from 'react-native';
+import { Dimensions, StyleSheet, View, Image, ListView, Text, } from 'react-native';
 import { connect } from 'react-redux'
 import { updateRoomList, updateCurrentRoomID } from '../actions'
 import RoomButton from './RoomButton'
@@ -47,7 +47,9 @@ class RoomList extends React.Component {
 
   render() {
     return (
-        <ListView style={[styles.container, {backgroundColor: this.state.backgroundColor}]}
+      <View style={styles.container}>
+      <Image source={require('../images/LevelSelect.png')} style={styles.backgroundImage} />
+        <ListView style={[ {backgroundColor: this.state.backgroundColor}]}
           key={this.props.rooms._id}
           dataSource={this.state.dataSource}
           renderRow={(room) => <RoomButton backgroundColor={room.themeColor} roomID={room._id} roomName={room.name} roomDifficulty={room.difficulty}
@@ -55,11 +57,19 @@ class RoomList extends React.Component {
           renderHeader={() => <Text style={styles.header}>{`${this.props.user.firstName} ${this.props.user.lastName}'s Escape Rooms:`}</Text>}
           enableEmptySections={true}>
         </ListView>
+
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+width: null,
+height: null,
+resizeMode: 'cover'
+  },
   container: {
     flex: 1,
     marginTop: 25,
